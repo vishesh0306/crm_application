@@ -1,4 +1,8 @@
+
 import 'package:flutter/material.dart';
+
+import 'AudienceBuilderPage.dart';
+import 'CampaignListingPage.dart';
 
 class DashboardPage extends StatelessWidget {
   @override
@@ -42,14 +46,15 @@ class DashboardPage extends StatelessWidget {
               leading: Icon(Icons.group),
               title: Text('Audiences'),
               onTap: () {
-                // Navigate to Audiences
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> AudienceBuilderPage()));
+
               },
             ),
             ListTile(
               leading: Icon(Icons.campaign),
               title: Text('Campaigns'),
               onTap: () {
-                // Navigate to Campaigns
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> CampaignListingPage()));
               },
             ),
             ListTile(
