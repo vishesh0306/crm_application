@@ -1,27 +1,22 @@
 import 'dart:convert';
-import 'package:crm_application/token.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'Dashboard.dart';
-import 'baseurl.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+import 'baseurl.dart';
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  bool check = false;
-
-
   @override
   Widget build(BuildContext context) {
-
     double screenWidth = MediaQuery.of(context).size.width;
     double boxWidth = screenWidth < 600 ? screenWidth * 0.8 : 400;
 
@@ -40,12 +35,12 @@ class _LoginState extends State<Login> {
                 child: Column(
                   children: [
                     Text(
-                      'Login to CRM Application',
+                      'Register to CRM Application',
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
-                        fontFamily: 'Roboto',
+                        // fontFamily: 'Roboto',
                         shadows: [
                           Shadow(
                             blurRadius: 10.0,
@@ -55,7 +50,9 @@ class _LoginState extends State<Login> {
                         ],
                       ),
                     ),
+
                     SizedBox(height: 30),
+
                     Container(
                       width: boxWidth,
                       padding: EdgeInsets.all(16.0),
@@ -71,8 +68,17 @@ class _LoginState extends State<Login> {
                         ],
                       ),
                       child: Column(
-
                         children: [
+                          TextField(
+                            controller: _usernameController,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.email),
+                              labelText: 'Username',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                          ),
                           TextField(
                             controller: _emailController,
                             decoration: InputDecoration(
@@ -83,11 +89,10 @@ class _LoginState extends State<Login> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 20),
                           TextField(
                             controller: _passwordController,
                             decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.lock),
+                              prefixIcon: Icon(Icons.email),
                               labelText: 'Password',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
@@ -98,13 +103,15 @@ class _LoginState extends State<Login> {
                           SizedBox(height: 20),
                           ElevatedButton(
                             onPressed: () {
-                              logintry();
+                              registertry();
                             },
-                            child: Text("Login"),
+                            child: Text("Register"),
                           ),
                         ],
                       ),
-                    )],
+                    ),
+
+                  ],
                 )
 
             ),
@@ -115,13 +122,15 @@ class _LoginState extends State<Login> {
   }
 
 
-  Future<void> login() async {
+  Future<void> register() async {
     try {
+      print(_usernameController.text);
       print(_emailController.text);
       print(_passwordController.text);
 
-      var url = Uri.parse('${BaseUrl.baseUrl}/auth/login');
+      var url = Uri.parse('${BaseUrl.baseUrl}/auth/register');
       var body = json.encode({
+        "name": _usernameController.text,
         "email": _emailController.text,
         "password": _passwordController.text,
       });
@@ -133,36 +142,28 @@ class _LoginState extends State<Login> {
       );
 
       print('Response status: ${response.statusCode}');
-      if (response.statusCode == 200) {
+
+      if (response.statusCode == 201) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           showModalBottomSheet(
             context: context,
             builder: (context) => const SizedBox(
               height: 100,
-              child: Center(child: Text("Logged in successfully")),
+              child: Center(child: Text("Registered")),
             ),
           );
         });
-        print("Login successful");
-
-        setState(() {
-          check = true;
-        });
-
+        print("Registered successful");
       } else {
         print("Login failed with status: ${response.statusCode}");
       }
       print('Response body: ${response.body}');
-      setState(() {
-        token = jsonDecode(response.body)['token'];
-      });
-      print('Response token: ${token}');
     } catch (e) {
       print('Error during login: $e');
     }
   }
 
-  Future<void> logintry() async {
+  Future<void> registertry() async {
     showDialog(
       context: context,
       builder: (context) {
@@ -171,9 +172,7 @@ class _LoginState extends State<Login> {
         );
       },
     );
-    await login();
+    await register();
     Navigator.of(context).pop();
-    check? Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> DashboardPage())):
-    print("error");
   }
 }
