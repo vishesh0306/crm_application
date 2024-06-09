@@ -63,27 +63,39 @@ class _CampaignListingPageState extends State<CampaignListingPage> {
     // Add more campaigns as needed
   ];
 
-  Future<void> fetchCampaigns() async {
-    final response = await http.get(Uri.parse('${BaseUrl.baseUrl}/api/campaigns/getall'));
-    if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body);
-      setState(() {
-        _campaigns = data.map((json) => Campaign.fromJson(json)).toList();
-      });
-    } else {
-      throw Exception('Failed to load campaigns');
-    }
-  }
-
   late List<Campaign> _filteredCampaigns;
 
   @override
   void initState() {
     super.initState();
     fetchCampaigns();
+    print(_campaigns);
     _filteredCampaigns = List.from(_campaigns);
   }
 
+  Future<void> fetchCampaigns() async {
+    try {
+
+      final response = await http.get(
+        Uri.parse('${BaseUrl.baseUrl}/campaigns/getall'),
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer ${token}',
+        },
+      );
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        setState(() {
+          _campaigns = data.map((json) => Campaign.fromJson(json)).toList();
+        });
+      } else {
+        throw Exception('Failed to load campaigns: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error fetching campaigns: $e');
+      // Handle error gracefully, such as showing a snackbar or toast
+    }
+  }
 
   Future<void> addCampaign() async {
     try {
