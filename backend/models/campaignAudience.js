@@ -14,6 +14,11 @@ const CampaignAudience = {
     getById: (id, callback) => {
         const query = 'SELECT * FROM campaign_audiences WHERE id = ?';
         db.query(query, [id], callback);
+    },
+
+    getCount: (callback) => {
+            const query = 'SELECT COUNT(*) FROM customer';
+            db.query(query, callback);
     }
 };
 
