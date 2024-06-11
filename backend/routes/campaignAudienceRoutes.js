@@ -5,6 +5,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 router.post('/', authMiddleware.authenticateJWT, campaignAudienceController.createAudience);
 router.get('/', authMiddleware.authenticateJWT, campaignAudienceController.getAllAudiences);
+router.get('/customercount', authMiddleware.authenticateJWT, campaignAudienceController.getAllCount);
 router.get('/:id', authMiddleware.authenticateJWT, campaignAudienceController.getAudienceById);
 
 module.exports = router;
