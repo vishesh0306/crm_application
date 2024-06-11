@@ -36,3 +36,25 @@ exports.getCampaignById = (req, res) => {
         res.status(200).send(campaign);
     });
 };
+
+exports.getMoreThanTenK = (req, res) => {
+    Campaign.getMoreThanTenK((err, campaign) => {
+        if (err) {
+            console.error('Error retrieving campaign:', err);
+            res.status(500).send('Error retrieving campaign.');
+            return;
+        }
+        res.status(200).send(campaign);
+    });
+};
+
+exports.getMoreThanTenKnThreeV = (req, res) => {
+    Campaign.getMoreThanTenKnThreeV((err, campaign) => {
+        if (err) {
+            console.error('Error retrieving campaign:', err);
+            res.status(500).send('Error retrieving campaign.');
+            return;
+        }
+        res.status(200).send(campaign);
+    });
+};

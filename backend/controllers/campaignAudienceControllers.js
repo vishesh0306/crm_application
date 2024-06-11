@@ -24,6 +24,21 @@ exports.getAllAudiences = (req, res) => {
     });
 };
 
+
+exports.getAllCount = (req, res) => {
+    CampaignAudience.getCount((err, audiences) => {
+        if (err) {
+            console.error('Error retrieving audiences:', err);
+            res.status(500).send('Error retrieving audiences.');
+            return;
+        }
+        res.status(200).send(audiences);
+    });
+};
+
+
+
+
 exports.getAudienceById = (req, res) => {
     const audienceId = req.params.id;
 

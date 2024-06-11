@@ -3,7 +3,7 @@ const pool = require('../config/db');
 exports.insertData = (req, res) => {
     const newData = req.body;
 
-    pool.query('INSERT INTO dummydata SET ?', newData, (err, results) => {
+    pool.query('INSERT INTO customer SET ?', newData, (err, results) => {
         if (err) {
             console.error('Error inserting data:', err);
             res.status(500).send('Error inserting data');
