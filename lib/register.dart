@@ -21,6 +21,9 @@ class _RegisterState extends State<Register> {
     double boxWidth = screenWidth < 600 ? screenWidth * 0.8 : 400;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blueAccent,
+      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -69,36 +72,45 @@ class _RegisterState extends State<Register> {
                       ),
                       child: Column(
                         children: [
-                          TextField(
-                            controller: _usernameController,
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.email),
-                              labelText: 'Username',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              controller: _usernameController,
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.email),
+                                labelText: 'Username',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                               ),
                             ),
                           ),
-                          TextField(
-                            controller: _emailController,
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.email),
-                              labelText: 'Email',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              controller: _emailController,
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.email),
+                                labelText: 'Email',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                               ),
                             ),
                           ),
-                          TextField(
-                            controller: _passwordController,
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.email),
-                              labelText: 'Password',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              controller: _passwordController,
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.email),
+                                labelText: 'Password',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                               ),
+                              obscureText: true,
                             ),
-                            obscureText: true,
                           ),
                           SizedBox(height: 20),
                           ElevatedButton(

@@ -1,8 +1,8 @@
 import 'dart:convert';
+import 'package:crm_application/Dashboard.dart';
 import 'package:crm_application/token.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'Dashboard.dart';
 import 'baseurl.dart';
 
 class Login extends StatefulWidget {
@@ -26,6 +26,7 @@ class _LoginState extends State<Login> {
     double boxWidth = screenWidth < 600 ? screenWidth * 0.8 : 400;
 
     return Scaffold(
+      appBar: AppBar(backgroundColor: Colors.blueAccent,),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -173,7 +174,10 @@ class _LoginState extends State<Login> {
     );
     await login();
     Navigator.of(context).pop();
-    check? Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> DashboardPage())):
+    check?
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> DashboardPage())):
     print("error");
+    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> CampaignResults())):
+    //     print("error");
   }
 }
